@@ -1,12 +1,14 @@
-import AcmeLogo from '@/app/ui/acme-logo';
+import PilSched from '@/app/ui/pilsched-logo';
+import styles from '@/app/ui/home.module.css';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        {/* <AcmeLogo /> */}
+      <div className="flex h-20 shrink-0 items-end rounded-lg bg-pink-500 p-4 md:h-52">
+        <PilSched />
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
@@ -17,6 +19,7 @@ export default function Page() {
             </a>
             , brought to you by Vercel.
           </p>
+          <div className={styles.shape} />
           <Link
             href="/login"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
@@ -25,7 +28,13 @@ export default function Page() {
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+          <Image
+            src="/pilates.png"
+            width={512}
+            height={512}
+            className="hidden md:block"
+            alt="Woman doing pilates"
+          />
         </div>
       </div>
     </main>
