@@ -7,6 +7,7 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue,
+  ClientsTable,
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -231,5 +232,37 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchClients(
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const clients = await sql<ClientsTable>`
+      SELECT
+        id,
+        name,
+        surname,
+        cellphone,
+        email,
+        subscribed as status
+      FROM clients
+      WHERE
+        name ILIKE ${`%${query}%`} OR
+        surname ILIKE ${`%${query}%`} OR
+        cellphone ILIKE ${`%${query}%`} OR
+        email ILIKE ${`%${query}%`}
+      ORDER BY name DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return clients.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
   }
 }
